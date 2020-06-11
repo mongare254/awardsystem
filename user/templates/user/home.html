@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <style>
+        .img1 {
+            height: 100px;
+            overflow: hidden;
+            background-color: grey;
+            position: absolute;
+            z-index: 21;
+            width: 100%;
+            border: 0;
+        }
+
+        .div1 {
+            height: 500px;
+            margin-top: 50px;
+            height: 500px;
+            background-color: aqua;
+            position: absolute;
+            z-index: 111;
+            width: 100%;
+            float: left;
+        }
+
+        .well1 {
+            background-color: #f8f9fa;
+            margin: 17px 43px 23px 23px;
+            padding: 49px 20px;
+            border-left: none;
+        }
+
+        .well2 {
+            background-color: teal;
+            padding: 7px 6px 5px 46px;
+            margin: 20px 10px 2px 16px;
+        }
+
+        @media only screen and (max-width: 1600px) {
+            .well1 {
+                border-radius: 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-10 well1 ">
+            <div class="well1">
+            <div>
+                <P style="text-align: center;color: #1d2124;font-size: 28px;" >AWARDS</P>
+            </div>
+                <div class="card">
+                    {% for item in awards %}
+                    <div class="card-header bg-success" style="text-transform: uppercase;">{{ item.award_name }} Award</div>
+                    <div class="card-body">{{ item.award_description }}</div>
+                    <div class="card-footer " style="text-align: center">
+                    <form method="post" action="{% url 'nomin' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="award" value="{{ item.award_name }}"/>
+                        <button class="btn btn-lg btn-primary" type="submit">PROCEED TO NOMINATIONS</button>
+                    </form>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+
+    </div>
+{% endblock %}

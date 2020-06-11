@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block css %}
+    <style>
+    .card-header p{
+        text-align: center;
+        color: black;
+    }
+    .form-group button{
+        margin:13px 0px 20px 43px;
+
+    }
+    .form-group button :hover{
+        background-color: #1b1e21;
+    }
+    .form-group .form-control{
+        margin-left:35px;
+        width:85%;
+        align-items: center;
+
+    }
+    .form-group label{
+       margin-left: 35px;
+    }
+    select, select option{
+        text-transform: uppercase;
+        color: #0b2e13;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <br><br><br>
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <p>NOMINATION FORM</p>
+                <div class="alert-info">
+                    {% for message in messages %}
+                    <strong>{{ message }}</strong>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-text bg-light">
+                <form action="{% url 'nominate' %}" method ="POST" class="form-group">
+                    {% csrf_token %}
+                    <label>Award</label>
+                    <select class="form-control" name="award" required>
+                        <option>{{ award }}</option>
+                    </select>
+                    <label>Session</label>
+                    <select class="form-control" name="ses" required>
+                        {% for ses1 in ses %}
+                        <option>{{ ses1.ses_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <label>Nominee Name</label>
+                    <select class="form-control" name="nominee_name">
+
+                    </select>
+                    <label>Reason</label>
+                    <textarea placeholder="Describe reason in summary" name="reason" class="form-control"></textarea>
+                    <label>Impact</label>
+                    <textarea placeholder="Describe impact in summary" name="impact" class="form-control"></textarea>
+                    <button class="btn btn-lg btn-success" type="submit">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+
+{% endblock %}

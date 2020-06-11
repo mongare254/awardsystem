@@ -1,0 +1,28 @@
+#nominees {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#nominees td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#nominees tr:nth-child(even){background-color: #f2f2f2;}
+
+#nominees tr:hover {background-color: #ddd;}
+
+#nominees th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+ .well1 {
+            background-color: #f8f9fa;
+            margin: 17px 43px 23px 23px;
+            padding: 34px;
+            border-left: none;
+        }
