@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <br><br><br>
+<button class="btn-success" onclick="myfunction()">Meeeme</button>
+<p id="demo"></p>
+
+
+    <script>
+    p1=5;
+    p2=3;
+    function myFunction(p1, p2) {
+        return p1 * p2;   // The function returns the product of p1 and p2
+    }
+    </script>
+{% endblock %}

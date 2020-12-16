@@ -1,0 +1,194 @@
+{% extends 'panelist/panel.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+    <style>
+    .card{
+        padding:20px;
+    }
+
+        .img1 {
+            height: 100px;
+            overflow: hidden;
+            background-color: grey;
+            position: absolute;
+            z-index: 21;
+            width: 100%;
+            border: 0;
+        }
+
+        .div1 {
+            height: 500px;
+            margin-top: 50px;
+            height: 500px;
+            background-color: aqua;
+            position: absolute;
+            z-index: 111;
+            width: 100%;
+            float: left;
+        }
+
+        .well1 {
+            background-color: #f8f9fa;
+            margin: 17px 43px 23px 23px;
+            padding: 19px 20px;
+            border-left: none;
+        }
+
+        .well2 {
+            background-color: teal;
+            padding: 7px 6px 5px 46px;
+            margin: 20px 10px 2px 16px;
+        }
+
+        @media only screen and (max-width: 1600px) {
+            .well1 {
+                border-radius: 0;
+            }
+        }
+        #nominees {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #nominees td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #nominees tr:nth-child(even){background-color: #f2f2f2;}
+
+        #nominees tr:hover {background-color: #ddd;}
+
+        #nominees th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+        table h3{
+            text-align: center;
+            color: springgreen;
+        }
+    .card1{
+        margin-top:100px;
+        margin-left: 30px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 well1 ">
+            <div class="well1">
+                <div>
+                    <P style="text-align: center;color: #1d2124;font-size: 28px;" >NOMINEES</P>
+                    <p id="nominee3"></p>
+                </div>
+                <div class="card">
+                    <table id="nominees">
+                        <tr style="padding: 30px;"><button style="float: right; margin: 20px;" class="btn-info btn-lg btn">Participants :{{ count }}</button></tr>
+                        <tr>
+                            <th>Nominee Name</th>
+                            <th>Award Nominated</th>
+                            <th>Reason</th>
+                            <th>Impact</th>
+                            <th>Nominator</th>
+                            <th>Session</th>
+                        </tr>
+                        {% if not nominees %}
+                            <tr>
+                                <td colspan="6" style="text-align: center;">NO Nominees for this session yet</td>
+                            </tr>
+                        {% else %}
+                            {% for nom in nominees %}
+                                <tr>
+                                    <td>{{ nom.nominee_name }}</td>
+                                    <td>{{ nom.award }}</td>
+                                    <td>{{ nom.reason }}</td>
+                                    <td>{{ nom.impact }}</td>
+                                    <td>{{ nom.username }}</td>
+                                    <td>{{ nom.session }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+        <br><br><br>
+           <div class="card bg-light">
+           <div class="card-header bg-primary"> FINAL LIST SUBMISSION FORM</div>
+           <br>
+           <div id="demo"></div>
+            <form method="POST" action="{% url 'finalsubmission' %}" class="form-group">
+            <table>
+                {% for error in messages %}
+                    <strong>{{ error }}</strong>
+                {% endfor %}
+            </table>
+            {% csrf_token %}
+            <div>
+                <label>For Award:</label>
+                <select class="form-control" name="award" id="award" >
+                    {% for award in award %}
+                        <option>{{ award.award_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label>Nominee Name:</label>
+                <select class="form-control" name="nominee_name">
+                    <span id="nominee">
+
+                    </span>
+                </select>
+            </div>
+            <div>
+                <label>Nominee POSITION:</label>
+                <select class="form-control" name="position">
+                        <option value="1">FIRST</option>
+                        <option value="2">SECOND</option>
+                        <option value="3">THIRD</option>
+                </select>
+            </div>
+            <div>
+                <label>Description:</label>
+                <textarea name="description" class="form-control"></textarea>
+            </div>
+            <input type="submit" class="btn-lg btn-success" style="margin:20px;">
+        </form>
+
+           </div>
+        </div>
+
+    </div>
+{% block js %}
+<script>
+    $("#award").change(function () {
+        var url ='{% url 'getnominee %}';
+        var award =$(this).val();
+        $("#demo").html(award)
+        $.ajax(
+            {
+                url:url;
+                data: {
+                    'award':award
+                },
+            success: function (data) {
+                    $("#nominee").html(data)
+
+            }
+            }
+        );
+
+        }
+
+    )
+</script>
+{% endblock %}
+{% endblock %}

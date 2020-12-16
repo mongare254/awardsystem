@@ -26,7 +26,19 @@
                             <th>Position</th>
                             <th>Description</th>
                         </tr>
-
+                        {% if winners %}
+                        {% for winner in winners %}
+                            <tr>
+                                <td>{{ winner.winner_name  }}</td>
+                                <td>{{ winner.dept }}</td>
+                                <td>{{ winner.award }}</td>
+                                <td>{{ winner.position }}</td>
+                                <td>{{ winner.description }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr><td colspan="5" style="text-align: center">No Winners yet</td></tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>
